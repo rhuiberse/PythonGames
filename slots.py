@@ -1,24 +1,24 @@
 import random
 
-MAX_LINES = 3
+MAX_LINES = 4
 MAX_BET = 100
 MIN_BET = 1
 
-ROWS = 3
+ROWS = 4
 COLS = 3
 
 symbol_count = {
-    "A": 2,
-    "B": 4,
-    "C": 6,
-    "D": 8
+    "🍒": 5,
+    "🍋": 4,
+    "🍊": 3,
+    "🍌": 2
 }
 
 symbol_value = {
-    "A": 10,
-    "B": 8,
-    "C": 5,
-    "D": 3
+    "🍒": 2,
+    "🍋": 4,
+    "🍊": 7,
+    "🍌": 10
 }
 
 def check_winnings(columns, lines, bet, values):
@@ -105,6 +105,8 @@ def get_bet():
         if amount.isdigit():
             amount = int(amount)
             if MIN_BET <= amount <= MAX_BET:
+
+
                 break
             else:
                 print(f'Amount must be between €{MIN_BET} and €{MAX_BET}!')
@@ -113,11 +115,7 @@ def get_bet():
             
     return amount
 
-
-
-
-def main():
-    balance = deposit()
+def spin(balance):
     lines = get_number_of_lines()
     while True:
         bet = get_bet()
@@ -135,6 +133,21 @@ def main():
     winnings, winning_lines = check_winnings(slots, lines, bet, symbol_value)
     print(f'You won €{winnings}')
     print(f"You won on lines:", *winning_lines)
+    return winnings - total_bet
+
+
+def main():
+    balance = deposit()
+    while True:
+        print(f'Current balance is: €{balance}')
+        answer = input('Press enter to play (q to quit)')
+        if answer == 'q':
+            break
+        balance += spin(balance)
+
+    print(f'You are left with {balance}')
+
+
 
     
 
